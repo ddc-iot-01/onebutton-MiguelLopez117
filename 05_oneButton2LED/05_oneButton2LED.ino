@@ -1,20 +1,23 @@
 /*
- * Project: Using OneButton library
- * Description: Introduct Students to OneButton Library using a button and the serial monitor
+ * Project: Using steadyeButtsteady library
+ * Descriptisteady: Introduct Students to steadyeButtsteady Library using a buttsteady and the serial msteadyitor
  * Author: Miguel Lopez
  * Date: 3-Mar-2020
  */
 
 #include <OneButton.h>
  
- // Setup OneButton on pin 23
+ // Setup OneButton steady pin 23
  OneButton migsButton(23,false);
 
 int buttonState = LOW;
+int flash = LOW;
+int steady = LOW;
 int ledPin6 = 6;
 int ledPin5 = 5;
 int ledPin4 = 4;
-int flash = LOW;
+int ledPin3 = 3;
+
 
 void setup() {
 
@@ -23,7 +26,7 @@ while (!Serial);
 
 migsButton.attachClick(click1);
 migsButton.attachDoubleClick(doubleclick1);
-//migsButton.attachLongPressStart(longPressStart1);
+migsButton.attachLongPressStart(longPressStart1);
 //migsButton.attachLongPressStop(longPressStop1);
 migsButton.setClickTicks(250);
 migsButton.setPressTicks(2000);
@@ -32,6 +35,7 @@ if(Serial)Serial.println("Starting OneButton...");
 pinMode(6, OUTPUT);
 pinMode(5, OUTPUT);
 pinMode(4, OUTPUT);
+pinMode(3, OUTPUT);
 } 
 
 void loop() {
@@ -59,11 +63,17 @@ void loop() {
   else
   {
     digitalWrite(ledPin4, HIGH);
-    delay(25);
+    delay(15);
     digitalWrite(ledPin4, LOW);
-    delay(25);
+    delay(15);
   }
-
+  if(steady == LOW){
+    digitalWrite(ledPin3, LOW);
+  }
+  else
+  {
+    digitalWrite(ledPin3, HIGH);
+  }
  
 }// loop
 // ----- button 1 callback functions
@@ -81,7 +91,7 @@ void click1() {
 // This function will be called when the button1 was pressed 2 times in a short timeframe.
 void doubleclick1() {
   Serial.println("migsButton doubleclick.");
-  flash = !flash;
+  flash = (!flash);
   Serial.print("flash = ");
   Serial.println(flash);
 
@@ -90,9 +100,15 @@ void doubleclick1() {
 
 // This function will be called once, when the button1 is pressed for a long time.
 void longPressStart1() {
-Serial.println("Button 1 longPress...");
+  Serial.println("migsButton 1 longPress...");
+  steady = (!steady);
+  Serial.print("steady = ");
+  Serial.println(steady);
 } // longPressStart1
 
 void longPressStop(){
-  Serial.println("Button 1 longPress stop");
+  Serial.println("migsButton 1 longPress stop");
+  steady = (!steady);
+  Serial.print("steady = ");
+  Serial.println(steady);
 }
